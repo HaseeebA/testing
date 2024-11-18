@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #qrcode {
+            margin: 20px 0;
+            text-align: center;
+        }
+        #status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .pending { background-color: #fff3cd; }
+        .authenticated { background-color: #d4edda; }
+        .ready { background-color: #d1e7dd; }
+        .error { background-color: #f8d7da; }
+        #messageForm {
+            margin-top: 20px;
+            display: none;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>WhatsApp Connection Test</h1>
+    <div id="status">Initializing...</div>
+    <div id="qrcode"></div>
+    
+    <form id="messageForm">
+        <div class="form-group">
+            <label for="number">Phone Number (with country code):</label>
+            <input type="text" id="number" required placeholder="e.g., 923237146391">
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+    </form>
+
+    <script>
+        const uid = '<%= uid %>';
+        let statusCheckInterval;
+
+        async function initializeWhatsApp() {
+            try {
+                const response = await fetch('/init', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${uid}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+                updateStatus(data);
+                startStatusCheck();
+            } catch (error) {
+                console.error('Initialization error:', error);
+                document.getElementById('status').textContent = 'Error initializing WhatsApp';
+                document.getElementById('status').className = 'error';
+            }
+        }
+
+        async function checkStatus() {
+            try {
+                const response = await fetch(`/client-status/${uid}`);
+                const data = await response.json();
+                updateStatus(data);
+            } catch (error) {
+                console.error('Status check error:', error);
+            }
+        }
+
+        function updateStatus(data) {
+            const statusDiv = document.getElementById('status');
+            const qrcodeDiv = document.getElementById('qrcode');
+            const messageForm = document.getElementById('messageForm');
+
+            statusDiv.textContent = `Status: ${data.status}`;
+            statusDiv.className = data.status;
+
+            if (data.qrCode) {
+                qrcodeDiv.innerHTML = `<img src="${data.qrCode}" alt="WhatsApp QR Code">`;
+                messageForm.style.display = 'none';
+            } else if (data.status === 'ready') {
+                qrcodeDiv.innerHTML = '';
+                messageForm.style.display = 'block';
+            }
+        }
+
+        function startStatusCheck() {
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+            }
+            statusCheckInterval = setInterval(checkStatus, 5000);
+        }
+
+        document.getElementById('messageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const number = document.getElementById('number').value;
+            const message = document.getElementById('message').value;
+
+            try {
+                const response = await fetch('/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${uid}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ number, message })
+                });
+                const data = await response.json();
+                alert(data.status === 'success' ? 'Message sent successfully!' : 'Failed to send message');
+            } catch (error) {
+                console.error('Error sending message:', error);
+                alert('Error sending message');
+            }
+        });
+
+        // Start initialization when page loads
+        initializeWhatsApp();
+    </script>
+</body>
+</html>
