@@ -11,8 +11,9 @@ uid3 = "KaecvaKob2"
 def send_message(uid, message, number):
     start_time = time.time()
     
-    url = 'http://44.214.108.8:3001/send-message'
-    headers = {'Authorizaton': f"Bearer {uid}"}
+    # url = 'http://44.214.108.8:3000/send-message'
+    url = 'http://localhost:3001/send-message'
+    headers = {'Authorization': f"Bearer {uid}"}
     data = {'message': message, 'number': number}
 
     response = requests.post(url, headers=headers, json=data)
@@ -28,9 +29,9 @@ def send_message(uid, message, number):
 # List of message tasks
 message_tasks = [
     (uid, "testing12", "923237146391"),
-    # (uid2, "testing123", "923237146391"),
+    (uid2, "testing123", "923237146391"),
     (uid3, "testing123", "923237146391"),
-    (uid, "testing12", "923237146391"),
+    # (uid, "testing12", "923237146391"),
     # (uid2, "testing123", "923237146391"),
     # (uid3, "testing123", "923237146391"),
     # (uid, "testing123", "923237146391"),

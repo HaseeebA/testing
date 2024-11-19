@@ -1,3 +1,13 @@
-2024/11/18-19:59:10.127 2924 Reusing MANIFEST C:\Users\hasee\OneDrive\Desktop\projects\fintrail_server\otp\otpserver2\.wapp-sessions\KaecvaKob2\session-KaecvaKob2\Default\Local Storage\leveldb/MANIFEST-000001
-2024/11/18-19:59:10.129 2924 Recovering log #9
-2024/11/18-19:59:10.130 2924 Reusing old log C:\Users\hasee\OneDrive\Desktop\projects\fintrail_server\otp\otpserver2\.wapp-sessions\KaecvaKob2\session-KaecvaKob2\Default\Local Storage\leveldb/000009.log 
+2024/11/19-00:16:01.691 521c Reusing MANIFEST C:\Users\hasee\OneDrive\Desktop\projects\fintrail_server\otp\otpserver2\.wapp-sessions\KaecvaKob2\session-KaecvaKob2\Default\Local Storage\leveldb/MANIFEST-000001
+2024/11/19-00:16:01.725 521c Recovering log #9
+2024/11/19-00:16:01.725 521c Level-0 table #11: started
+2024/11/19-00:16:01.730 521c Level-0 table #11: 14879 bytes OK
+2024/11/19-00:16:01.733 521c Delete type=0 #9
+2024/11/19-00:16:01.734 521c Compacting 4@0 + 0@1 files
+2024/11/19-00:16:01.746 521c Generated table #13@0: 74 keys, 11366 bytes
+2024/11/19-00:16:01.746 521c Compacted 4@0 + 0@1 files => 11366 bytes
+2024/11/19-00:16:01.747 521c compacted to: files[ 0 1 0 0 0 0 0 ]
+2024/11/19-00:16:01.748 521c Delete type=2 #3
+2024/11/19-00:16:01.748 521c Delete type=2 #7
+2024/11/19-00:16:01.748 521c Delete type=2 #9
+2024/11/19-00:16:01.748 521c Delete type=2 #11
