@@ -11,8 +11,8 @@ uid3 = "KaecvaKob2"
 def send_message(uid, message, number):
     start_time = time.time()
     
-    url = 'http://localhost:3001/send-message'
-    headers = {'Authorization': f"Bearer {uid}"}
+    url = 'http://44.214.108.8:3001/send-message'
+    headers = {'Authorizaton': f"Bearer {uid}"}
     data = {'message': message, 'number': number}
 
     response = requests.post(url, headers=headers, json=data)

@@ -351,7 +351,7 @@ process.on('uncaughtException', async (error) => {
     }
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`WhatsApp Server running on port ${PORT}`);
 });
